@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo web</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+
+ <header>
+    <h1>Task list</h1>
+
+    <form id="new-form-task">
+        <input type="text"
+        id="new-task-input"
+        placeholder="What your plan"
+        >
+        <input type="submit" 
+        id="new-task-submit"
+        value="Add task">
+    </form>
+ </header>
+
+ <main>
+    <section class="task-list">
+        <h2>task</h2>
+
+        <div id="tasks">
+
+            <div class="task">
+                <input 
+                type="text"
+                class="text"
+                value="My new task"
+                readonly
+                >
+            </div>
+            <div class="actions">
+                <button class="edit">Edit</button>
+                <button class="delete">Delete</button>
+            </div>
+
+        </div>
+    </section>
+ </main>
+   
+    
+
+
+
+
+    <script src="./Js/script.js"></script>
+</body>
+</html>

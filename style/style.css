@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    font-size: 62.5%; 
+    font-family: "Rubik", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: red;
+    color: #fff;
+}
+
+header {
+    padding: 2rem 1rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: aqua;
+    margin-bottom: 1rem;
+}
+
+#new-form-task {
+    display: flex;
+}
+
+input, button {
+   border: none;
+   outline: none;
+   background: none;
+}
+
+#new-task-input{
+    width: 200%;
+    flex: 1 1 0%;
+    background-color: orange;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-right: 1rem;
+    color: gray;
+    font-size: 1.25rem;
+}
+
+#new-task-input::placeholder {
+    color: gray;
+}
+
+#new-task-submit {
+    color: pink;
+    font-size: 1.25rem;
+    font-weight: 700;
+    background-color: linear-gradient(to right , rgb(189, 20, 48), rgb(98, 0, 255));
+    
+}
+
+
