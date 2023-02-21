@@ -31,86 +31,80 @@ btn.addEventListener("click", function(e){
                 let li = document.createElement("div");
                 li.setAttribute("id", "listItem")
                 li.setAttribute("data-key", element.id)
-                // console.log(all_task[0].todos)
 
                 li.innerHTML = `${all_task[0].todos}
 
-                        <button class="delete" onClick=" del(${element.id})">delete</button>
-                        <button class="edit" onClick=" del(${element.id})">edit</button>`
+                        <div class=""> 
+                            <button class="edit" onClick=" etd(${element.id})">edit</button>
+                            <button class="delete" onClick=" del(${element.id})">delete</button>
+                        </div>
+                        `
                     
-                        // console.log(li.innerText)
                         list.append(li)
-                        li.classList.add("li")
         })
 
        
         error.innerHTML =''
 
 
+    }
+   
+})
+window.onload = function(){
+    let checkTask = JSON.parse(localStorage.getItem("todoDetails"))
+    if (checkTask != null) {
+        localStorage.setItem("todoDetails", JSON.stringify(checkTask));
 
+        let todoTask = JSON.parse(localStorage.getItem("todoDetails"));
+        todoTask.forEach(function(element, index){
+            todos.push(element[0])
+
+        });
+        
     }
 
-    
-    
-})
+    localStorage.removeItem("todoDetails")
 
 
+}
 
+// function render() {
+//     let all_task = JSON.parse(localStorage.getItem("todoDetails"))
 
-// let todo = []
-// // let list = document.getElementById("task-item")
-// let parent = document.getElementById("task")
-// let butt = document.getElementById("button")
-// butt.addEventListener("click", function add (){
-//     let todoInput = document.getElementById("text").value 
-//     console.log(todoInput);
-// let error = document.getElementById("error")
-// if(todoInput.length == 0){
-//    error.append("nothing to add")
-// }else{
-//    let input = {
-//         todo_list : todoInput,
-//         id: Date.now()
-//     }
-//     todo.push(input)
-//     let storing = localStorage.setItem("todolist", JSON.stringify(todo))
+//     tasks.innerHTML = ""
 
-//     let all_list = JSON.parse(localStorage.getItem("todolist"))
+//         all_task.forEach(function(element, index){
+//             let li = document.createElement("div");
+//             li.setAttribute("id", "listItem")
+//             li.setAttribute("data-key", element.id)
 
-//     list.innerHTML = ''
-    
-//       all_list.forEach(function (item, index){
-//         const li = document.createElement('li');
-//         li.setAttribute("id", "listItem")
-//         li.setAttribute("data-key", item.id)
-//         li.innerHTML = `${item.todo_list}
-//                         <button class="delete" onClick=" del(${item.id})">delete</button>`
-//         list.append(li)
-//         li.classList.add("li")
+//             li.innerHTML = `${all_task[0].todos}
+
+//                     <div class=""> 
+//                         <button class="edit" onClick=" etd(${element.id})">edit</button>
+//                         <button class="delete" onClick=" del(${element.id})">delete</button>
+//                     </div>
+//                     `
+                
+//                     list.append(li)
 //     })
-//     error.innerHTML =''
 
 // }
-// })
-// window.onload = function(){
-//     let checker = JSON.parse(localStorage.getItem("todolist"))
-//     if(checker != null){
-//           // Yes there is data then set the new local storage 
-//           localStorage.setItem("reLoad", JSON.stringify(checker));
+// render();
 
-//           // Then get the data back and push it to our users global array
-//           let todolists = JSON.parse(localStorage.getItem("reLoad"));
-//           console.log(todolists);
-          
-//           todolists.forEach(function (item, index) {
-//             todo.push(item)
-//           });
-//     }
-//           // terminate the localStorage
-//           localStorage.removeItem("reLoad")
+function del(id) {
+    todos = todos.filter(function(element) {
+        return element.id != id;
+    });
+    localStorage.setItem("todoDetails", JSON.stringify(todos));
+
+
+    location.reload()
+
     
 
-// }
+}
+
 // function render(){
 //     let all_list = JSON.parse(localStorage.getItem("todolist"))
 //     list.innerHTML = ''
@@ -178,26 +172,6 @@ btn.addEventListener("click", function(e){
 
 
 
-
-// const form = document.querySelector("#new-form-task")
-// const list_el = document.querySelector("#tasks")
-// let todos = JSON.parse(localStorage.getItem("todos"));
-// let arr = []
-// form.addEventListener("submit", (e) => {
-//     const input = document.querySelector("#new-task-input").value
-//     e.preventDefault();
-//     if(input.length == 0){
-//         // alert("Please enter a task")
-//         console.log("okay");
-//     }else{
-//         let data = {
-//             task : input
-//         }
-//         arr.push(data)
-//         localStorage.setItem("task", JSON.stringify(arr))
-
-//     }
-// });
 
 // function render(){
 
