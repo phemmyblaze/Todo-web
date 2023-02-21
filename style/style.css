@@ -43,11 +43,12 @@ input, button {
    background: none;
 }
 
+
 #new-task-input{
     width: 200%;
     flex: 1 1 0%;
     background-color: orange;
-    padding: 1rem;
+    padding: 2.1rem 15rem;
     border-radius: 1rem;
     margin-right: 1rem;
     color: gray;
@@ -59,10 +60,11 @@ input, button {
 }
 
 #new-task-submit {
-    color: pink;
+    color: rgb(192, 255, 206);
     font-size: 1.25rem;
     font-weight: 700;
-    background-color: linear-gradient(to right , rgb(189, 20, 48), rgb(98, 0, 255)); 
+    background-color:#050505; 
+    padding: 1rem 3rem;
     cursor: pointer;
 }
 
@@ -85,6 +87,7 @@ main {
 
 .task-list {
     padding: 1rem;
+    
 }
 
 .task-list h2 {
@@ -95,14 +98,30 @@ main {
     margin-bottom: 1rem;
 }
 
-#tasks {
-    display: flex;
+#tasks .task{
+    display:flex;
     justify-content: space-between;
-    /* background-color: green; */
-    padding: 1rem;
+    background-color: green;
+    padding: 2rem;
     border-radius: 1rem;
     margin-bottom: 1rem;
     
+}
+
+#tasks .task .content {
+flex: 1 1 0%;
+}
+
+#tasks .task.content .text {
+    color: blue;
+    font-size: 1.125rem;
+    width: 100%;
+    display: block;
+}
+
+.task {
+    display: flex;
+    gap: 42rem;
 }
 
 .task-text {
@@ -113,6 +132,10 @@ main {
 
 .task-text:not(:read-only) {
     color: blueviolet;
+}
+
+.actions {
+    display: flex;
 }
 
 .actions button{
