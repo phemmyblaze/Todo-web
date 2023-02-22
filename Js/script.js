@@ -1,189 +1,96 @@
-let todos = []
-let list = document.querySelector("#tasks")
-let btn = document.querySelector("#new-task-submit")
+let todoItems = [];
 
-btn.addEventListener("click", function(e){
-    e.preventDefault();
-    let tasks = document.querySelector("#new-task-input").value;
+function renderTodo(todo) {
+  localStorage.setItem('todoItems', JSON.stringify(todoItems));
 
-        ///THIS IS TO DISPLAY AN ERROR MESSAGE WHEN THERE IS NO TASK ADDED
-        let error = document.getElementById("error")
+  const list = document.querySelector('.js-todo-list');
+  const item = document.querySelector(`[data-key='${todo.id}']`);
+  
+  if (todo.deleted) {
+    item.remove();
+    if (todoItems.length === 0) list.innerHTML = '';
+    return
+  }
 
-    if (tasks.length == 0) {
-        error.style.display = "block"
-    } else {
-        let details = {
-            todos: tasks,
-            id: Date.now()
-        }
+  const isChecked = todo.checked ? 'done': '';
+  const node = document.createElement("li");
+  node.setAttribute('class', `todo-item ${isChecked}`);
+  node.setAttribute('data-key', todo.id);
+  node.innerHTML = `
+    <input id="${todo.id}" type="checkbox"/>
+    <label for="${todo.id}" class="tick js-tick"></label>
+    <span>${todo.text}</span>
+    <button class="delete-todo js-delete-todo">
+    <svg><use href="#delete-icon"></use></svg>
+    </button>
+  `;
 
-        todos.push(details)
-
-        /////ADDING TASK TO LOCAL STORAGE
-        let localBox = localStorage.setItem("todoDetails", JSON.stringify(todos))
-
-
-        let all_task = JSON.parse(localStorage.getItem("todoDetails"))
-
-        tasks.innerHTML = ""
-
-            all_task.forEach(function(element, index){
-                let li = document.createElement("div");
-                li.setAttribute("id", "listItem")
-                li.setAttribute("data-key", element.id)
-
-                li.innerHTML = `${all_task[0].todos}
-
-                        <div class=""> 
-                            <button class="edit" onClick=" etd(${element.id})">edit</button>
-                            <button class="delete" onClick=" del(${element.id})">delete</button>
-                        </div>
-                        `
-                    
-                        list.append(li)
-        })
-
-       
-        error.innerHTML =''
-
-
-    }
-   
-})
-window.onload = function(){
-    let checkTask = JSON.parse(localStorage.getItem("todoDetails"))
-    if (checkTask != null) {
-        localStorage.setItem("todoDetails", JSON.stringify(checkTask));
-
-        let todoTask = JSON.parse(localStorage.getItem("todoDetails"));
-        todoTask.forEach(function(element, index){
-            todos.push(element[0])
-
-        });
-        
-    }
-
-    localStorage.removeItem("todoDetails")
-
-
+  if (item) {
+    list.replaceChild(node, item);
+  } else {
+    list.append(node);
+  }
 }
 
-// function render() {
-//     let all_task = JSON.parse(localStorage.getItem("todoDetails"))
+function addTodo(text) {
+  const todo = {
+    text,
+    checked: false,
+    id: Date.now(),
+  };
 
-//     tasks.innerHTML = ""
+  todoItems.push(todo);
+  renderTodo(todo);
+}
 
-//         all_task.forEach(function(element, index){
-//             let li = document.createElement("div");
-//             li.setAttribute("id", "listItem")
-//             li.setAttribute("data-key", element.id)
+function toggleDone(key) {
+  const index = todoItems.findIndex(item => item.id === Number(key));
+  todoItems[index].checked = !todoItems[index].checked;
+  renderTodo(todoItems[index]);
+}
 
-//             li.innerHTML = `${all_task[0].todos}
+function deleteTodo(key) {
+  const index = todoItems.findIndex(item => item.id === Number(key));
+  const todo = {
+    deleted: true,
+    ...todoItems[index]
+  };
+  todoItems = todoItems.filter(item => item.id !== Number(key));
+  renderTodo(todo);
+}
 
-//                     <div class=""> 
-//                         <button class="edit" onClick=" etd(${element.id})">edit</button>
-//                         <button class="delete" onClick=" del(${element.id})">delete</button>
-//                     </div>
-//                     `
-                
-//                     list.append(li)
-//     })
+const form = document.querySelector('.js-form');
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  const input = document.querySelector('.js-todo-input');
 
-// }
-// render();
+  const text = input.value.trim();
+  if (text !== '') {
+    addTodo(text);
+    input.value = '';
+    input.focus();
+  }
+});
 
-function del(id) {
-    todos = todos.filter(function(element) {
-        return element.id != id;
+const list = document.querySelector('.js-todo-list');
+list.addEventListener('click', event => {
+  if (event.target.classList.contains('js-tick')) {
+    const itemKey = event.target.parentElement.dataset.key;
+    toggleDone(itemKey);
+  }
+  
+  if (event.target.classList.contains('js-delete-todo')) {
+    const itemKey = event.target.parentElement.dataset.key;
+    deleteTodo(itemKey);
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const ref = localStorage.getItem('todoItems');
+  if (ref) {
+    todoItems = JSON.parse(ref);
+    todoItems.forEach(t => {
+      renderTodo(t);
     });
-    localStorage.setItem("todoDetails", JSON.stringify(todos));
-
-
-    location.reload()
-
-    
-
-}
-
-// function render(){
-//     let all_list = JSON.parse(localStorage.getItem("todolist"))
-//     list.innerHTML = ''
-//       all_list.forEach(function (item, index){
-//         const li = document.createElement('li');
-//         li.setAttribute("id", "listItem")
-//         li.setAttribute("data-key", item.id)
-//         li.innerHTML = `<span id="itemize">${item.todo_list}</span>
-//                         <button class="delete " id= "delete" onClick="del(${item.id})">delete</button>`
-//         list.append(li)
-//         li.classList.add("li")
-       
-//     })
-// }
-// render()
-
-// function del(id){
-//   todo = todo.filter((item)=>{
-//     console.log('Hello');
-//     return item.id != id
-//   })
-//   localStorage.setItem("todolist", JSON.stringify(todo))
-//   render()
-//   location.reload()
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function render(){
-
-// }
-// render()
-
-// function del(){
-
-// }
-
-
-
-
-
-
+  }
+});
